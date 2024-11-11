@@ -11,7 +11,15 @@ namespace VisaApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            logincontent.Text = "";
+            if (Session["Admin"]!=null)
+            {
+                logincontent.Text = "Logout";
+            }
+            else if (Session["UserId"]!=null)
+            {
+                logincontent.Text = "Logout";
+            }
         }
     }
 }

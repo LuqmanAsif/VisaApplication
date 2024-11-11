@@ -11,7 +11,7 @@ namespace VisaApplication.DataBaseLayer
 {
     public class VisaDBLayer
     {
-        static string connectionString = "Data Source=server_name;Initial Catalog=database_name;User ID=user_name;Password=password;";
+        static string connectionString = "Data Source=DESKTOP-OD3GFLQ;Initial Catalog=VisaApplication;TrustServerCertificate=true;integerated security=true";
         public bool CreateUser(User user)
         {
             try
@@ -119,6 +119,63 @@ namespace VisaApplication.DataBaseLayer
                 cmd.Parameters.AddWithValue("@ApplicationID", applicationID);
                 con.Open();
                 cmd.ExecuteNonQuery();
+            }
+        }
+
+        public User GetLoggedUserForSession(string userName)
+        {
+            User user = new User();
+            try
+            {
+                using (SqlConnection con=new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    string query = "select UserId from Users where UserName='"+userName+"'";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataReader sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        user.UserId = long.Parse(sdr[0].ToString());
+                    }
+                    sdr.Close();
+                    con.Close();
+                }
+                return user;
+            }
+            catch (Exception)
+            {
+                return user;
+            }
+        }
+
+        public bool CheckAlreadyUserExistorNot(string username)
+        {
+            bool isfound = false;
+            try
+            {
+                using (SqlConnection con=new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    string query="Select * from Users where userName='"+username+"'";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataReader sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        if (sdr[0].ToString().Count()>0)
+                        {
+                            isfound = true;
+                            break;
+                        }
+                    }
+                    sdr.Close();
+                    con.Close();
+                }
+                return isfound;
+            }
+            catch (Exception)
+            {
+
+                return isfound;
             }
         }
     }
