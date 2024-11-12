@@ -178,5 +178,30 @@ namespace VisaApplication.DataBaseLayer
                 return isfound;
             }
         }
+
+        internal object GetUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object UpdateUser(string applicantName, string visaType)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object DeleteUser(int applicationID)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object DeleteVisaApplication(int applicationID)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal DataRow GetVisaApplicationById(int applicationID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
